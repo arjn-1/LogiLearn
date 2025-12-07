@@ -79,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", () => {
         addMessage(q, "user");
         sendToServer(q);
+        alert("thinking");
       });
       faqContainer.appendChild(btn);
     });
