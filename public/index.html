@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logistics Chat — Pro</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Logistics Chat</h2>
+      <p class="sidebar-subtitle">Warehouse & Supply Chain Assistant</p>
+    </div>
+
+    <div class="sidebar-toggle">
+      <button id="toggleModeBtn" class="toggle-mode">Switch to Case Builder</button>
+    </div>
+
+    <!-- CHAT SIDEBAR CONTENT -->
+    <div id="chatSidebar" class="sidebar-content">
+      <div class="sidebar-section">
+        <label for="faqTopic" class="sidebar-label">FAQ Topic</label>
+        <select id="faqTopic" class="topic-select"></select>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">FAQs</p>
+        <div id="faqContainer" class="faq-container"></div>
+      </div>
+
+      <div class="footer-btns">
+        <button id="refreshBtn">Refresh</button>
+        <button id="clearBtn">Clear Chat</button>
+        <button id="saveChatBtn">Save Chat</button>
+      </div>
+
+      <div class="tips">
+        <p><strong>Tips</strong></p>
+        <ul>
+          <li>Select a topic to see relevant FAQs.</li>
+          <li>Use the mic to dictate questions.</li>
+          <li>Press Enter to send messages.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CASE BUILDER SIDEBAR CONTENT (hidden by default) -->
+    <div id="builderSidebar" class="sidebar-content hidden">
+      <h3>Case Study Builder</h3>
+
+      <div class="form-group">
+        <label>Scenario</label>
+        <select id="cbScenario">
+          <option value="">Choose scenario…</option>
+          <option>Inventory Accuracy Issue</option>
+          <option>Vehicle Routing Optimization</option>
+          <option>Demand Forecasting Challenge</option>
+          <option>Warehouse Layout Redesign</option>
+          <option>Pick-Pack Inefficiency</option>
+          <option>Supply Chain Disruption</option>
+          <option value="others">Others (Custom Scenario)</option>
+        </select>
+      </div>
+
+      <div id="customScenarioWrap" class="form-group" style="display:none;">
+        <label>Custom Scenario</label>
+        <textarea id="cbCustomScenario" placeholder="Write your custom scenario here..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Case Type</label>
+        <select id="cbType">
+          <option value="">Choose type…</option>
+          <option value="hbs">HBS Case Study</option>
+          <option value="short">Short Case Study</option>
+          <option value="pas">Problem-Analysis-Solution</option>
+          <!-- <option value="numerical-only">Numerical-Only (questions & solutions)</option> -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Company Name</label>
+        <input id="cbCompany" placeholder="e.g., Acme Logistics" />
+      </div>
+
+      <div class="form-group">
+        <label>Industry / Vertical</label>
+        <input id="cbIndustry" placeholder="e.g., E-commerce Fulfillment" />
+      </div>
+
+      <div class="form-group">
+        <label>KPIs (comma separated)</label>
+        <input id="cbKpis" placeholder="e.g., Inventory accuracy, OTIF, Lead time" />
+      </div>
+
+      <div class="form-group">
+        <label>Additional context</label>
+        <textarea id="cbContext" placeholder="Provide extra details (optional)"></textarea>
+      </div>
+
+      <hr/>
+
+      <div class="form-group">
+        <label><input type="checkbox" id="cbIncludeNumericals" /> Generate numerical problems with solutions (along with case)</label>
+      </div>
+
+      <!-- Numerical settings: visible either if checked or when case type = numerical-only -->
+      <div id="numericalSettings" class="form-row" style="display:none; margin-top:8px;">
+        <div style="flex:1">
+          <label>Count</label>
+          <input id="cbNumericalCount" type="number" min="1" max="20" value="3" />
+        </div>
+        <div style="flex:1">
+          <label>Difficulty</label>
+          <select id="cbNumericalDifficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:12px;">
+        <button id="cbGenerate" class="btn primary">Generate</button>
+        <button id="cbClear" class="btn ghost">Clear</button>
+      </div>
+
+      <small class="muted">Generated content (case or numericals) will appear in the main chat area.</small>
+    </div>
+
+  </div>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area">
+    <div class="chat-header">
+      <div>
+        <div class="chat-title">Logistics & Warehouse Management Chatbot</div>
+        <div id="statusText" class="chat-status">Ready</div>
+      </div>
+      <button id="themeToggle" class="theme-toggle" title="Toggle dark mode">🌓</button>
+    </div>
+
+    <div id="chatBody" class="chat-body">
+      <div class="msg bot">
+        Hello! I am the Logistics & Warehouse Management assistant. Pick an FAQ or ask anything.
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <button id="micBtn" class="mic-btn" title="Voice input">🎤</button>
+      <input type="text" id="userInput" placeholder="Ask a question or choose an FAQ…" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
